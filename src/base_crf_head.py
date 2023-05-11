@@ -39,7 +39,7 @@ class BaseCrfHead(nn.Module):
         super().__init__()
         self.include_start_end_transitions = include_start_end_transitions
         self.num_tags = num_tags
-        self.padding``_tag_id = padding_tag_id
+        self.padding_tag_id = padding_tag_id
 
         # transitions_constraint_mask indicates valid transitions
         # (based on supplied constraints), including constraints for
