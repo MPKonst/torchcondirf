@@ -5,9 +5,8 @@ of the forward, backward and Viterbi algorithms.
 from typing import List, Tuple, Dict, Optional
 
 import torch
-from torch import nn
-
-from eignet.torchcrf import util
+from torchcondirf import util
+from torchcondirf.base_crf_head import BaseCrfHead
 
 
 class CrfHead(BaseCrfHead):

@@ -1,2 +1,0 @@
-from struct_crf_head import StructCrfHead
-from crf_head import CrfHead

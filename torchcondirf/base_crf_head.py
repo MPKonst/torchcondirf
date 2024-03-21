@@ -4,11 +4,10 @@ A base class for the Crf heads.
 from typing import List, Tuple
 
 import torch
-from torch import nn
-import util
+from torchcondirf import util
 
 
-class BaseCrfHead(nn.Module):
+class BaseCrfHead(torch.nn.Module):
     # set a negative value, representing the log of probability 0
     # Don't use values that are "too negative" to avoid inf and nan in tensors and grads
     VERY_NEGATIVE_VALUE = -10000.0
@@ -107,7 +106,7 @@ class BaseCrfHead(nn.Module):
             )
 
     def _register_tensor_as_parameter(self, name, tensor):
-        self.register_parameter(name, nn.Parameter(tensor))
+        self.register_parameter(name, torch.nn.Parameter(tensor))
 
     def _scale_and_mask_log_emissions(self, log_emissions, lengths, mask=None):
         """

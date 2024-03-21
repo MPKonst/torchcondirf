@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=40.6.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "torchcondirf"
+version = "0.1.0"
+description = "Fast and flexible implementations of linear chain conditional random fields (LC-CRFs) in pytorch."
+authors = [{name = "Eigen Technologies", email = "contact@eigentech.com"}]
+dependencies = [
+    "torch",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pandas",
+]
+
+[tool.setuptools]
+packages = ["torchcondirf"]
