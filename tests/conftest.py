@@ -27,7 +27,7 @@ LOG_EMISSIONS = torch.Tensor(
     ]
 )
 # transitions of shape (3, 3), nothing transitions to/from padding tag 0
-LOG_TRANSITIONS = torch.tensor([[-1e4, -1e4, -1e4], [-1e4, 5, 4], [-1e4, 2, 3]])
+LOG_TRANSITIONS = torch.tensor([[-1e4, -1e4, -1e4], [-1e4, 5, 2], [-1e4, 4, 3]])
 
 @pytest.fixture
 def EXPECTED_SCORES_DF():
@@ -86,12 +86,3 @@ def EXPECTED_SCORES_DF():
         [[i] * ((num_tags - 1) ** lengths[i]) for i in range(batch_size)], []
     )
     return expected_scores
-
-@pytest.fixture
-def crf_head():
-    crf_head = CrfHead(num_tags=NUM_TAGS, include_start_end_transitions=False)
-    # disable grad to set desired transitions
-    crf_head.log_transitions.requires_grad_(False)
-    crf_head.log_transitions.data = LOG_TRANSITIONS
-    crf_head.log_transitions.requires_grad_()
-    return crf_head
