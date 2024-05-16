@@ -2,32 +2,43 @@
 import pandas as pd
 import pytest
 import torch
-from torchcondirf import CrfHead
 
-NUM_TAGS = 3  # 2 actual tags (1, 2) with 0 for pad
-BATCH_SIZE = 3
-LENGTHS = torch.LongTensor([4, 2, 1])
+@pytest.fixture
+def NUM_TAGS():
+   return 3  # 2 actual tags (1, 2) with 0 for pad
+
+@pytest.fixture
+def BATCH_SIZE():
+    return 3
+
+@pytest.fixture
+def LENGTHS():
+    return torch.LongTensor([4, 2, 1])
 
 # emissions of shape (3, 4, 3)
-LOG_EMISSIONS = torch.Tensor(
-    [
-        [[1, 2, 3], [5, 6, 7], [12, 11, 10], [-1, -2, 0]],
+@pytest.fixture
+def LOG_EMISSIONS():
+   return torch.Tensor(
         [
-            [1, 4, 9],
-            [5, 1, 5],
-            [12, 121, 140],  # irrelevant, length is 2
-            [-1, -200, 0],  # irrelevant, lenght is 2
-        ],
-        [
-            [1, 15, 23],
-            [5000, 3211, 2123],  # irrelevant, lenght is 1
-            [12, 121, 140],  # irrelevant, length is 1
-            [-1, -200, 0],  # irrelevant, lenght is 1
-        ],
-    ]
-)
+            [[1, 2, 3], [5, 6, 7], [12, 11, 10], [-1, -2, 0]],
+            [
+                [1, 4, 9],
+                [5, 1, 5],
+                [12, 121, 140],  # irrelevant, length is 2
+                [-1, -200, 0],  # irrelevant, length is 2
+            ],
+            [
+                [1, 15, 23],
+                [5000, 3211, 2123],  # irrelevant, length is 1
+                [12, 121, 140],  # irrelevant, length is 1
+                [-1, -200, 0],  # irrelevant, length is 1
+            ],
+        ]
+    )
 # transitions of shape (3, 3), nothing transitions to/from padding tag 0
-LOG_TRANSITIONS = torch.tensor([[-1e4, -1e4, -1e4], [-1e4, 5, 2], [-1e4, 4, 3]])
+@pytest.fixture
+def LOG_TRANSITIONS():
+ return torch.tensor([[-1e4, -1e4, -1e4], [-1e4, 5, 2], [-1e4, 4, 3]])
 
 @pytest.fixture
 def EXPECTED_SCORES_DF():
