@@ -4,6 +4,7 @@ import torch
 import numpy as np
 from itertools import groupby
 import pandas as pd
+from torchcondirf.base_crf_head import BaseCrfHead
 
 
 def groupby_slices(labels, key=None):
@@ -91,14 +92,6 @@ def verify_viterbi_predictions(
                 assert model_prediction in score_to_tag_seqences[score_key]
 
 
-def get_(list_, index, other=None):
-    """Like dict.get but works for lists and tuples."""
-    try:
-        return list_[index]
-    except (KeyError, IndexError):
-        return other
-
-
 def convert_constraints(batch_tag_observations):
     """
     Converts partial observations into the format for tag constraints,
@@ -142,18 +135,18 @@ def compute_log_partition_by_hand(scores_by_hand, constraints=None):
         )
 
     return scores_for_constrained_sequences.groupby("example_index").apply(
-        log_partition_for_group
+        log_partition_for_group, include_groups=False
     )
 
 
 def compute_marginal_by_hand(
     scores_by_hand,
-    log_partition_by_hand,
     position,
     tag,
     example_index,
     constraints=None,
 ):
+    log_partition_by_hand = compute_log_partition_by_hand(scores_by_hand, constraints)
     mask_for_constraints = get_mask_for_scores_by_hand(scores_by_hand, constraints)
     scores_for_constrained_sequences = scores_by_hand.loc[mask_for_constraints]
     scores_for_example = scores_for_constrained_sequences.query(
@@ -162,6 +155,8 @@ def compute_marginal_by_hand(
     mask_for_sequences_with_correct_tag = np.array(
         [seq[position] == tag for seq in scores_for_example["tag_sequence"]]
     )
+    if not mask_for_sequences_with_correct_tag.any():
+        return BaseCrfHead.VERY_NEGATIVE_VALUE
     scores_for_sequences_with_correct_tag = torch.tensor(
         scores_for_example.loc[mask_for_sequences_with_correct_tag]["score"].values,
         dtype=torch.float,
