@@ -17,14 +17,12 @@ torch.set_grad_enabled(False)
 torch.manual_seed(1)
 
 
-@pytest.mark.parametrize("crf_head_class", [CrfHead])
 @pytest.mark.parametrize(
     "start_end_transitions",
     [None, (torch.tensor([12.0, 1.0, 4.0]), torch.tensor([2.0, 3.0, 6.0]))],
 )
 @pytest.mark.parametrize("log_emissions_scaling", [0.0, 11.3, 2.71])
 def test_scores_computed_correctly(
-    crf_head_class,
     start_end_transitions,
     log_emissions_scaling,
     EXPECTED_SCORES_DF,
@@ -34,7 +32,7 @@ def test_scores_computed_correctly(
     LOG_TRANSITIONS,
 ):
     crf_head, log_emissions = instantiate_crf_head_for_test(
-        crf_head_class,
+        CrfHead,
         NUM_TAGS,
         LOG_EMISSIONS,
         LENGTHS,
@@ -51,14 +49,12 @@ def test_scores_computed_correctly(
         np.testing.assert_approx_equal(row.score, predicted_score)
 
 
-@pytest.mark.parametrize("crf_head_class", [CrfHead])
 @pytest.mark.parametrize(
     "start_end_transitions",
     [None, (torch.tensor([12.0, 1.0, 4.0]), torch.tensor([2.0, 3.0, 6.0]))],
 )
 @pytest.mark.parametrize("log_emissions_scaling", [0.0, 11.3, 2.7])
 def test_scores_computed_correctly_in_batch(
-    crf_head_class,
     start_end_transitions,
     log_emissions_scaling,
     EXPECTED_SCORES_DF,
@@ -68,7 +64,7 @@ def test_scores_computed_correctly_in_batch(
     LOG_TRANSITIONS,
 ):
     crf_head, log_emissions = instantiate_crf_head_for_test(
-        crf_head_class,
+        CrfHead,
         NUM_TAGS,
         LOG_EMISSIONS,
         LENGTHS,
@@ -100,7 +96,6 @@ def test_scores_computed_correctly_in_batch(
     )
 
 
-@pytest.mark.parametrize("crf_head_class", [CrfHead])
 @pytest.mark.parametrize(
     "start_end_transitions",
     [None, (torch.tensor([12.0, 1.0, 4.0]), torch.tensor([2.0, 3.0, 6.0]))],
@@ -120,7 +115,6 @@ def test_scores_computed_correctly_in_batch(
 )
 @pytest.mark.parametrize("top_k", [1, 2, 10])
 def test_viterbi(
-    crf_head_class,
     start_end_transitions,
     log_emissions_scaling,
     tag_constraints,
@@ -132,7 +126,7 @@ def test_viterbi(
     LOG_TRANSITIONS,
 ):
     crf_head, log_emissions = instantiate_crf_head_for_test(
-        crf_head_class,
+        CrfHead,
         NUM_TAGS,
         LOG_EMISSIONS,
         LENGTHS,
@@ -155,7 +149,6 @@ def test_viterbi(
     )
 
 
-@pytest.mark.parametrize("crf_head_class", [CrfHead])
 @pytest.mark.parametrize(
     "start_end_transitions",
     [None, (torch.tensor([12.0, 1.0, 4.0]), torch.tensor([2.0, 3.0, 6.0]))],
@@ -175,7 +168,6 @@ def test_viterbi(
 )
 @pytest.mark.parametrize("backward", [False, True])
 def test_partition_function(
-    crf_head_class,
     start_end_transitions,
     log_emissions_scaling,
     tag_constraints,
@@ -187,7 +179,7 @@ def test_partition_function(
     LOG_TRANSITIONS,
 ):
     crf_head, log_emissions = instantiate_crf_head_for_test(
-        crf_head_class,
+        CrfHead,
         NUM_TAGS,
         LOG_EMISSIONS,
         LENGTHS,
@@ -272,7 +264,6 @@ def test_weighted_loglik_agrees_with_loglik_when_weights_are_one(
     assert torch.allclose(log_likelihoods, weighted_log_likelihoods)
 
 
-@pytest.mark.parametrize("crf_head_class", [CrfHead])
 @pytest.mark.parametrize(
     "start_end_transitions",
     [None, (torch.tensor([12.0, 1.0, 4.0]), torch.tensor([2.0, 3.0, 6.0]))],
@@ -291,7 +282,6 @@ def test_weighted_loglik_agrees_with_loglik_when_weights_are_one(
     ],
 )
 def test_marginals(
-    crf_head_class,
     start_end_transitions,
     log_emissions_scaling,
     tag_constraints,
@@ -302,7 +292,7 @@ def test_marginals(
     LOG_TRANSITIONS,
 ):
     crf_head, log_emissions = instantiate_crf_head_for_test(
-        crf_head_class,
+        CrfHead,
         NUM_TAGS,
         LOG_EMISSIONS,
         LENGTHS,
