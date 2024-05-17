@@ -1,24 +1,29 @@
 """Artifacts to use throughout tests."""
+
 import pandas as pd
 import pytest
 import torch
 
+
 @pytest.fixture
 def NUM_TAGS():
-   return 3  # 2 actual tags (1, 2) with 0 for pad
+    return 3  # 2 actual tags (1, 2) with 0 for pad
+
 
 @pytest.fixture
 def BATCH_SIZE():
     return 3
 
+
 @pytest.fixture
 def LENGTHS():
     return torch.LongTensor([4, 2, 1])
 
+
 # emissions of shape (3, 4, 3)
 @pytest.fixture
 def LOG_EMISSIONS():
-   return torch.Tensor(
+    return torch.Tensor(
         [
             [[1, 2, 3], [5, 6, 7], [12, 11, 10], [-1, -2, 0]],
             [
@@ -35,10 +40,13 @@ def LOG_EMISSIONS():
             ],
         ]
     )
+
+
 # transitions of shape (3, 3), nothing transitions to/from padding tag 0
 @pytest.fixture
 def LOG_TRANSITIONS():
- return torch.tensor([[-1e4, -1e4, -1e4], [-1e4, 5, 2], [-1e4, 4, 3]])
+    return torch.tensor([[-1e4, -1e4, -1e4], [-1e4, 5, 2], [-1e4, 4, 3]])
+
 
 @pytest.fixture
 def EXPECTED_SCORES_DF():
@@ -81,7 +89,10 @@ def EXPECTED_SCORES_DF():
         .rename(columns={"index": "tag_sequence"})
         .apply(
             lambda row: pd.Series(
-                {"tag_sequence": [int(tag) for tag in row.tag_sequence], "score": row.score}
+                {
+                    "tag_sequence": [int(tag) for tag in row.tag_sequence],
+                    "score": row.score,
+                }
             ),
             axis=1,
         )

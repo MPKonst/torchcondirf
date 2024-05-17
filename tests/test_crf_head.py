@@ -336,6 +336,6 @@ def test_marginals(
         # when we have constraints, some log marginals are "very negative"
         # to get equality, exponentiate to make the marginals 0
         torch.testing.assert_close(
-            torch.exp(marginals_by_hand[i]), 
-            torch.exp(log_marginals[i, : LENGTHS[i], 1:])
+            torch.exp(marginals_by_hand[i]),
+            torch.exp(log_marginals[i, : LENGTHS[i], 1:]),
         )
