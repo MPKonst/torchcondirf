@@ -15,7 +15,7 @@ To install the library in dev mode and run the tests, run `pip install -e '.[dev
 ## Authors and acknowledgment
 
 The repository is a fork of https://gitlab.com/eigentech1/torchcondirf.
-It was developed by Momchil Konstantinov and Gregorio Benincasa at Eigen Technologies. A lot of initial inspiration was taken from the CRF implementations by AI2 (https://github.com/allenai/allennlp/).
+It was originally developed by Momchil Konstantinov and Gregorio Benincasa at Eigen Technologies, circa 2020. A lot of initial inspiration was taken from the CRF implementations by AI2 (https://github.com/allenai/allennlp/).
 
 ## License
 MIT
