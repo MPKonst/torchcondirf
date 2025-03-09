@@ -3,6 +3,7 @@ Some utility functions for tensor manipulation.
 Some functions inspired by/copied from 
 https://github.com/allenai/allennlp/blob/main/allennlp/nn/util.py
 """
+
 import torch
 from typing import List, Optional, Iterable
 from functools import partial

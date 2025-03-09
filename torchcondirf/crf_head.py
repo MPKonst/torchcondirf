@@ -2,6 +2,7 @@
 A CRF implementation which implements fast constrained and batched versions
 of the forward, backward and Viterbi algorithms.
 """
+
 from typing import List, Tuple, Dict, Optional
 
 import torch
@@ -283,12 +284,12 @@ class CrfHead(BaseCrfHead):
 
         Returns:
             Tuple[torch.Tensor, torch.Tensor]: a 2-tuple of tensors, holding
-                respectively the predictions and the logits. More precisly, 
-                the tuple consists of 
-                1. a (batch_size, top_k, max_len) tensor holding the 
+                respectively the predictions and the logits. More precisly,
+                the tuple consists of
+                1. a (batch_size, top_k, max_len) tensor holding the
                    top_k sequences of tags for sequence each sequence in the
                    batch (padded with the pad_token_id),
-                2. a (batch_size, top_k) tensor holding the logits of each  
+                2. a (batch_size, top_k) tensor holding the logits of each
                    sequence
         """
         batch_size, max_sequence_length, num_tags = log_emissions.size()

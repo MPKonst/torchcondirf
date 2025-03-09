@@ -1,6 +1,7 @@
 """
 A base class for the Crf heads.
 """
+
 from typing import List, Tuple
 
 import torch

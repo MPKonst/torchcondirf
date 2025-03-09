@@ -6,13 +6,15 @@ pass is performed via back-prop.
 This is an alternative to the CrfHead with the same API but based on 
 Sasha Rush's torch_struct library.
 """
+
 from typing import List, Tuple, Union, Optional
 
 import torch
 from torch_struct import LinearChainCRF
 
-import util
-from base_crf_head import BaseCrfHead
+from torchcondirf import util
+from torchcondirf.base_crf_head import BaseCrfHead
+
 
 class StructCrfHead(BaseCrfHead):
     def __init__(
@@ -105,8 +107,7 @@ class StructCrfHead(BaseCrfHead):
         distribution = LinearChainCRF(log_potentials, lengths=lengths)
         return distribution
 
-    def sample_paths():
-        ...
+    def sample_paths(): ...
 
     def viterbi_algorithm(
         self,
